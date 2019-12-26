@@ -6,15 +6,21 @@ export var cards: Array = []
 
 signal card_played
 
-func add_to_hand(card: Card) -> void:
+func add_to_hand(card: Card, index: int) -> void:
 	card.connect("card_clicked", self, "card_in_hand_clicked")
-	cards.append(card)
+	if (index == -1):
+		cards.append(card)
+	else:
+		cards.insert(index, card)
 	add_child(card)
 	update()
 
 func discard_card(card: Card) -> void:
+	var index = cards.find(card)
+	card.disconnect("card_clicked", self, "card_in_hand_clicked")
 	cards.erase(card)
 	remove_child(card)
+	emit_signal("card_played", index, card)
 
 func card_in_hand_clicked(card: Card) -> void:
 	discard_card(card)
