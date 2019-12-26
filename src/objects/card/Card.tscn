@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://src/objects/card/Card.gd" type="Script" id=1]
+[ext_resource path="res://assets/card/back.svg" type="Texture" id=2]
+[ext_resource path="res://assets/card/card-base.png" type="Texture" id=3]
+[ext_resource path="res://assets/card/clubs.svg" type="Texture" id=4]
+[ext_resource path="res://assets/card/spades.svg" type="Texture" id=5]
+[ext_resource path="res://assets/card/hearts.svg" type="Texture" id=6]
+[ext_resource path="res://assets/card/diamonds.svg" type="Texture" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 83.8714, 119.981 )
+
+[node name="Card" type="Area2D"]
+script = ExtResource( 1 )
+
+[node name="Back" type="Sprite" parent="."]
+position = Vector2( 0.663483, 0.663452 )
+scale = Vector2( 0.819658, 0.819658 )
+texture = ExtResource( 2 )
+
+[node name="Base" type="Sprite" parent="."]
+position = Vector2( 0.09198, 0.276978 )
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 6.10352e-05, -7.62939e-06 )
+shape = SubResource( 1 )
+
+[node name="ValueLabel" type="Label" parent="."]
+margin_left = -76.2933
+margin_top = -112.118
+margin_right = -36.2933
+margin_bottom = -98.118
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "2"
+
+[node name="Suit_Clubs" type="Sprite" parent="."]
+scale = Vector2( 0.0948044, 0.0948044 )
+texture = ExtResource( 4 )
+
+[node name="Suit_Spades" type="Sprite" parent="."]
+scale = Vector2( 0.0948044, 0.0948044 )
+texture = ExtResource( 5 )
+
+[node name="Suit_Hearts" type="Sprite" parent="."]
+scale = Vector2( 0.0948044, 0.0948044 )
+texture = ExtResource( 6 )
+
+[node name="Suit_Diamonds" type="Sprite" parent="."]
+scale = Vector2( 0.0948044, 0.0948044 )
+texture = ExtResource( 7 )
