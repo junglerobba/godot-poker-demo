@@ -40,6 +40,10 @@ config/icon="res://icon.png"
 
 CardData="*res://src/objects/card/CardData.gd"
 
+[locale]
+
+translations=PoolStringArray( "res://translation/strings.de.translation", "res://translation/strings.en.translation" )
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

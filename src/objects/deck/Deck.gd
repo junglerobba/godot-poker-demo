@@ -8,6 +8,7 @@ var deck = []
 signal pressed
 
 func create_deck() -> void:
+	cards = []
 	for rank in deck:
 		for suit in range(0, 4):
 			var card = Card.instance()

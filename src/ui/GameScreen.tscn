@@ -13,3 +13,17 @@ position = Vector2( 103, 154 )
 
 [node name="Hand" parent="." instance=ExtResource( 3 )]
 position = Vector2( 18.6316, 312.263 )
+
+[node name="TurnButton" type="Button" parent="."]
+margin_left = 606.316
+margin_top = 40.0
+margin_right = 618.316
+margin_bottom = 60.0
+text = "end turn"
+
+[node name="WinLabel" type="Label" parent="."]
+margin_left = 237.316
+margin_top = -128.632
+margin_right = 539.316
+margin_bottom = -83.6316
+[connection signal="button_up" from="TurnButton" to="." method="_on_TurnButton_button_up"]

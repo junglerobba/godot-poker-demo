@@ -6,6 +6,9 @@ export var cards: Array = []
 
 signal card_played
 
+func init() -> void:
+	cards = []
+
 func add_to_hand(card: Card, index: int) -> void:
 	card.connect("card_clicked", self, "card_in_hand_clicked")
 	if (index == -1):
@@ -25,7 +28,7 @@ func discard_card(card: Card) -> void:
 func card_in_hand_clicked(card: Card) -> void:
 	discard_card(card)
 
-func sort_by_rank(a: Card, b: Card) -> bool:
+static func sort_by_rank(a: Card, b: Card) -> bool:
 	return a.rank < b.rank
 
 func update() -> void:
