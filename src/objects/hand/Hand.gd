@@ -25,8 +25,12 @@ func discard_card(card: Card) -> void:
 func card_in_hand_clicked(card: Card) -> void:
 	discard_card(card)
 
+func sort_by_rank(a: Card, b: Card) -> bool:
+	return a.rank < b.rank
+
 func update() -> void:
-	var offset = (cards.size() - 1) * 36
+	cards.sort_custom(self, "sort_by_rank")
+	var offset = (cards.size() - 1)
 	for i in range (0, cards.size()):
 		cards[i].position = Vector2(i * 200, 0)
 	for card in cards:
