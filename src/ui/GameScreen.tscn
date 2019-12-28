@@ -26,4 +26,11 @@ margin_left = 237.316
 margin_top = -128.632
 margin_right = 539.316
 margin_bottom = -83.6316
+
+[node name="DrawButton" type="Button" parent="."]
+margin_left = 684.842
+margin_top = 41.1579
+margin_right = 752.842
+margin_bottom = 61.1579
 [connection signal="button_up" from="TurnButton" to="." method="_on_TurnButton_button_up"]
+[connection signal="button_up" from="DrawButton" to="." method="_on_DrawButton_button_up"]

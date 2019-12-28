@@ -16,18 +16,21 @@ enum HandRanks {
 onready var deck = $Deck
 onready var hand = $Hand
 onready var turn_button = $TurnButton
+onready var draw_button = $DrawButton
 onready var win_label = $WinLabel
 
-const REDRAW_LIMIT: = 2
 var redraws: int
 
 func _ready() -> void:
 	turn_button.text = tr("end_turn")
+	draw_button.text = tr("draw")
+	turn_button.hide()
+	draw_button.hide()
 	deck.connect("pressed", self, "on_deck_pressed")
 	hand.connect("card_played", self, "on_card_played")
+	init()
 
 func init() -> void:
-	turn_button.show()
 	win_label.text = ""
 	deck.create_deck()
 	hand.init()
@@ -37,20 +40,20 @@ func on_deck_pressed() -> void:
 		init()
 	if hand.cards.size() != 0:
 		return
+	turn_button.show()
+	draw_button.show()
 	redraws = 0
 	var cards: Array = deck.draw(5)
 	for card in cards:
 		hand.add_to_hand(card, -1)
 
 func on_card_played(index: int, card_played: Card) -> void:
-	if redraws >= REDRAW_LIMIT && REDRAW_LIMIT != 0:
-		hand.add_to_hand(card_played, index)
 	if hand.cards.size() < 5:
 		redraws += 1
 		var cards: Array = deck.draw(1)
 		for card in cards:
 			hand.add_to_hand(card, index)
-	if redraws >= REDRAW_LIMIT && REDRAW_LIMIT != 0:
+	if redraws >= 1:
 		end_turn()
 
 
@@ -113,4 +116,8 @@ func end_turn() -> void:
 	print("end turn")
 	var result = evaluate_hand(hand.cards)
 	turn_button.hide()
+	draw_button.hide()
 	win_label.text = tr(HandRanks.keys()[result].to_lower())
+
+func _on_DrawButton_button_up() -> void:
+	hand.on_draw()

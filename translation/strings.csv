@@ -1,5 +1,7 @@
 id,en,de
 end_turn,End Turn,Zug beenden
+draw,Draw,
+hold,HOLD,
 royal_flush,Royal Flush,
 straight_flush,Straight Flush,
 four_of_a_kind,Four of a kind,

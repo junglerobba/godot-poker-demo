@@ -18,6 +18,13 @@ func add_to_hand(card: Card, index: int) -> void:
 	add_child(card)
 	update()
 
+func on_draw() -> void:
+	for card in cards:
+		if !card.hold:
+			discard_card(card)
+		card.hold = false
+		card.update()
+
 func discard_card(card: Card) -> void:
 	var index = cards.find(card)
 	card.disconnect("card_clicked", self, "card_in_hand_clicked")
@@ -26,7 +33,7 @@ func discard_card(card: Card) -> void:
 	emit_signal("card_played", index, card)
 
 func card_in_hand_clicked(card: Card) -> void:
-	discard_card(card)
+	card.toggle_hold()
 
 static func sort_by_rank(a: Card, b: Card) -> bool:
 	return a.rank < b.rank

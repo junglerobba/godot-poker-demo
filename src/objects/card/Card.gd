@@ -7,6 +7,7 @@ export(CardData.Suits) var suits
 export var hidden: bool
 export var rank: int
 export var suit: int
+export var hold: bool
 
 signal card_clicked
 
@@ -19,16 +20,23 @@ func set_rank(rank: int) -> void:
 func set_suit(suit: int) -> void:
 	self.suit = suit
 
+func toggle_hold() -> void:
+	self.hold = !self.hold
+	update()
+
 func init(rank: int, suit: int, hidden: bool) -> void:
 	self.rank = rank
 	self.suit = suit
 	self.hidden = hidden
+	self.hold = false
 	update()
 
 func update() -> void:
 	var backTexture = $Back
 	var valueLabel = $ValueLabel
 	var baseTexture = $Base
+	var holdOverlay = $Hold_Overlay
+	var holdLabel = $Hold_Label
 	var suitClubs = $Suit_Clubs
 	var suitSpades = $Suit_Spades
 	var suitHearts = $Suit_Hearts
@@ -37,7 +45,7 @@ func update() -> void:
 	suitSpades.hide()
 	suitHearts.hide()
 	suitDiamonds.hide()
-	
+
 	if hidden:
 			backTexture.show()
 			valueLabel.hide()
@@ -45,7 +53,15 @@ func update() -> void:
 	else:
 		backTexture.hide()
 		baseTexture.show()
-	
+
+		if hold:
+			holdOverlay.show()
+			holdLabel.show()
+			holdLabel.text = tr("hold")
+		else:
+			holdOverlay.hide()
+			holdLabel.hide()
+
 		match suit:
 			0:
 				suitClubs.show()
@@ -55,7 +71,7 @@ func update() -> void:
 				suitHearts.show()
 			3:
 				suitSpades.show()
-		
+
 		var valueLabelText
 		match rank:
 			0, 1, 2, 3, 4, 5, 6, 7, 8:
