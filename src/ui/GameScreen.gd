@@ -27,7 +27,7 @@ func _ready() -> void:
 	turn_button.hide()
 	draw_button.hide()
 	deck.connect("pressed", self, "on_deck_pressed")
-	hand.connect("card_played", self, "on_card_played")
+	hand.connect("cards_discarded", self, "on_cards_discarded")
 	init()
 
 func init() -> void:
@@ -45,14 +45,14 @@ func on_deck_pressed() -> void:
 	redraws = 0
 	var cards: Array = deck.draw(5)
 	for card in cards:
-		hand.add_to_hand(card, -1)
+		hand.add_to_hand(card)
 
-func on_card_played(index: int, card_played: Card) -> void:
-	if hand.cards.size() < 5:
+func on_cards_discarded(amount: int) -> void:
+	if hand.cards.size() == hand.limit - amount:
 		redraws += 1
-		var cards: Array = deck.draw(1)
+		var cards: Array = deck.draw(amount)
 		for card in cards:
-			hand.add_to_hand(card, index)
+			hand.add_to_hand(card)
 	if redraws >= 1:
 		end_turn()
 

@@ -1,27 +1,28 @@
 extends Position2D
 class_name Hand
 
-var limit: int = 5
+export var limit: int = 5
 export var cards: Array = []
 
-signal card_played
+signal cards_discarded
 
 func init() -> void:
 	cards = []
 
-func add_to_hand(card: Card, index: int) -> void:
+func add_to_hand(card: Card) -> void:
 	card.connect("card_clicked", self, "card_in_hand_clicked")
-	if (index == -1):
-		cards.append(card)
-	else:
-		cards.insert(index, card)
+	cards.append(card)
 	add_child(card)
 	update()
 
 func on_draw() -> void:
+	var amount: int = 0
 	for card in cards:
 		if !card.hold:
+			amount += 1
 			discard_card(card)
+	emit_signal("cards_discarded", amount)
+	for card in cards:
 		card.hold = false
 		card.update()
 
@@ -30,7 +31,6 @@ func discard_card(card: Card) -> void:
 	card.disconnect("card_clicked", self, "card_in_hand_clicked")
 	cards.erase(card)
 	remove_child(card)
-	emit_signal("card_played", index, card)
 
 func card_in_hand_clicked(card: Card) -> void:
 	card.toggle_hold()
